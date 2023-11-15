@@ -5,7 +5,6 @@ from settings import STATUS_ORDER_COMPLETE
 
 from settings import STATUS_DELIVERY_KAZAN, CRM_URL, CRM_TOKEN
 from loger import loger
-from datetime import timedelta
 
 
 class CrmService:

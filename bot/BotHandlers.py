@@ -1,9 +1,7 @@
 from aiogram import Dispatcher, types, F
 from aiogram.filters import Command
-from loger import logging
 from Controller import Controller
 from .keyboards import OrderIdCallback, get_main_ikb, get_order_ikb
-from bot.middlewares import admin_middlewares
 from bot.templates import order_template
 from datetime import date
 
@@ -43,7 +41,7 @@ class BotHandlers:
             await msg.answer(
                 text=order_template(order=order),
                 reply_markup=get_order_ikb(order),
-                disable_web_page_preview=True,  # Отключает предзагруска карты
+                disable_web_page_preview=True,
             )
 
     async def cl_order_update_status(self, callback: types.CallbackQuery, callback_data: OrderIdCallback) -> None:

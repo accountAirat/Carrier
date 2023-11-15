@@ -37,34 +37,20 @@ LOGGING = {
             'formatter': 'standard',
             'class': 'logging.StreamHandler',
             'level': 'INFO',
-            # 'stream': sys.stdout, # Не меняет вывод
         },
-        # 'file': {
-        #     'formatter': 'standard',
-        #     'class': 'logging.FileHandler',
-        #     'level': 'DEBUG',
-        #     'filename': './log/log.log'
-        #     # Можно добавить 'mode': 'w'
-        # },
         'zip_file': {
             'formatter': 'standard',
             'class': 'loger.ZipTimedRotatingFileHandler',
             'level': 'DEBUG',
             'filename': './log/log.log',
-            # 'suffix': "%Y-%m-%d"
-            # 'when': "D",
-            # 'interval': 1,
-            # 'backupCount': 7,
-            # 'encoding': 'utf-8',
-            # 'delay': True,
         }
     },
     'loggers': {
-        # 'aiogram': {
-        #     'handlers': ['console', 'zip_file'],
-        #     'level': 'DEBUG',
-        #     'propagate': True,
-        # },
+        'aiogram': {
+            'handlers': ['console', 'zip_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
         'loger': {
             'handlers': ['console', 'zip_file'],
             'level': 'DEBUG',
