@@ -13,6 +13,7 @@ PARSE_MODE = 'HTML'
 
 # Статус заказ “Доставка Казань“
 STATUS_DELIVERY_KAZAN = 'delivery-kazan'
+
 STATUS_ORDER_COMPLETE = 'complete'
 
 LOGGING = {
