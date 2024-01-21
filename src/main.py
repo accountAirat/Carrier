@@ -1,16 +1,17 @@
 import retailcrm
+import os
 
 import asyncio
 from aiogram import Bot, Dispatcher
 from aiogram.types.bot_command import BotCommand
 from aiogram.methods import SetMyCommands
 
-from loger import loger
-from settings import CRM_URL, CRM_TOKEN, BOT_TOKEN, PARSE_MODE
+from src.loger import logger
+from src.settings import CRM_URL, CRM_TOKEN, BOT_TOKEN, PARSE_MODE
 
-from crm.CrmService import CrmService
-from Controller import Controller
-from bot.BotHandlers import BotHandlers
+from src.crm.CrmService import CrmService
+from src.Controller import Controller
+from src.bot.BotHandlers import BotHandlers
 
 
 async def main() -> None:
@@ -30,11 +31,11 @@ async def main() -> None:
     try:
         await dp.start_polling(bot)
     except Exception as e:
-        loger.critical(e)
+        logger.critical(e)
 
 
 async def on_startup():
-    loger.info('#################### SERVER_START ####################')
+    logger.info('#################### SERVER_START ####################')
 
 
 if __name__ == '__main__':

@@ -1,9 +1,9 @@
 from datetime import datetime
-from loger import loger
+from src.loger import logger
 
 
 def order_template(order: dict, ) -> str:
-    loger.debug(f'Подготовка вида заказа №{order.get("order_number")} с атрибутами: {order}')
+    logger.debug(f'Подготовка вида заказа №{order.get("order_number")} с атрибутами: {order}')
     try:
 
         text = f'<b>🛒 Заказ № {order.get("order_number", "")}</b>\n'
@@ -11,7 +11,7 @@ def order_template(order: dict, ) -> str:
         if order.get('delivery_datetime').get('date'):
             text += f'Дата доставки: {datetime.strptime(order.get("delivery_datetime").get("date"), "%Y-%m-%d").strftime("%d.%m.%Y")}\n'
         else:
-            text += f'Дата доставки: <em>Не указано<</em> \n'
+            text += f'Дата доставки: <em>Не указано</em> \n'
 
         if order.get("delivery_datetime").get("time"):
             text += (f'Время доставки: c {order.get("delivery_datetime").get("time").get("from")} '
@@ -36,10 +36,10 @@ def order_template(order: dict, ) -> str:
             text += f'➡ {product.get("name")} - {product.get("quantity")}\n'
 
         text += f'Итоговая сумма: {order.get("total_summ")} ₽'
-        loger.debug(f'Подготовка вида заказа №{order.get("order_number")} успешно завершена')
+        logger.debug(f'Подготовка вида заказа №{order.get("order_number")} успешно завершена. {text = }')
         return text
     except Exception as _ex:
-        loger.error(f'Не удалось подготовить вид заказа №{order.get("order_number")}. {_ex}', exc_info=True)
+        logger.error(f'Не удалось подготовить вид заказа №{order.get("order_number")}. {_ex}', exc_info=True)
         return f'Не удалось отобразить заказ № {order.get("order_number")}'
 
 

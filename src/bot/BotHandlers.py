@@ -1,9 +1,10 @@
 from aiogram import Dispatcher, types, F
 from aiogram.filters import Command
-from Controller import Controller
+from src.Controller import Controller
 from .keyboards import OrderIdCallback, get_main_ikb, get_order_ikb
-from bot.templates import order_template
+from src.bot.templates import order_template
 from datetime import date
+from src.loger import logger
 
 
 class BotHandlers:
@@ -22,6 +23,7 @@ class BotHandlers:
         self.dp.message.register(self.unprocessed)
 
     async def cmd_start(self, msg: types.Message) -> None:
+        logger.debug(f'Command Start with a message: { msg = }')
         reply_text = f'Привет, {msg.from_user.first_name}!'
 
         await msg.answer(
@@ -36,13 +38,13 @@ class BotHandlers:
         orders = self.controller.orders(delivery_date)
         if not orders:
             await msg.answer(text='Заказов нет')
-
-        for order in orders:
-            await msg.answer(
-                text=order_template(order=order),
-                reply_markup=get_order_ikb(order),
-                disable_web_page_preview=True,
-            )
+        else:
+            for order in orders:
+                await msg.answer(
+                    text=order_template(order=order),
+                    reply_markup=get_order_ikb(order),
+                    disable_web_page_preview=True,
+                )
 
     async def cl_order_update_status(self, callback: types.CallbackQuery, callback_data: OrderIdCallback) -> None:
         if self.controller.order_completed(callback_data.pk):

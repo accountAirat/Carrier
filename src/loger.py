@@ -1,7 +1,6 @@
-import logging
 import os
 import zipfile
-from settings import LOGGING
+from src.settings import LOGGING
 from logging.handlers import TimedRotatingFileHandler
 import logging.config
 
@@ -9,7 +8,8 @@ import logging.config
 class ZipTimedRotatingFileHandler(TimedRotatingFileHandler):
     def __init__(self, filename, when='D', interval=7, backupCount=7,
                  encoding=None, delay=True, utc=False, atTime=None):
-        super().__init__(filename, when, interval, backupCount, encoding, delay, utc, atTime)
+        super().__init__(filename=filename, when=when, interval=interval, backupCount=backupCount, encoding=encoding,
+                         delay=delay, utc=utc, atTime=atTime)
 
     def make_zip(self):
         dir_path, base_filename = os.path.split(self.baseFilename)
@@ -37,5 +37,4 @@ class ZipTimedRotatingFileHandler(TimedRotatingFileHandler):
 
 
 logging.config.dictConfig(LOGGING)
-loger = logging.getLogger('loger')
-
+logger = logging.getLogger('logger')

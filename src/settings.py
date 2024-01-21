@@ -1,5 +1,10 @@
 from dotenv import load_dotenv
 import os
+import sys
+
+
+# Получаем абсолютный путь к текущему файлу и перемещаемся в корневую директорию проекта
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 load_dotenv('.env')
 
@@ -39,21 +44,22 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'level': 'INFO',
         },
-        'zip_file': {
+        'zip': {
             'formatter': 'standard',
             'class': 'loger.ZipTimedRotatingFileHandler',
+            # 'class': 'logging.FileHandler', # Для тестов
             'level': 'DEBUG',
-            'filename': './log/log.log',
+            'filename': f'{BASE_DIR}/log/log.log',
         }
     },
     'loggers': {
         'aiogram': {
-            'handlers': ['console', 'zip_file'],
-            'level': 'DEBUG',
+            'handlers': ['console', 'zip'],
+            'level': 'INFO',
             'propagate': True,
         },
-        'loger': {
-            'handlers': ['console', 'zip_file'],
+        'logger': {
+            'handlers': ['console', 'zip'],
             'level': 'DEBUG',
             'propagate': True,
         },

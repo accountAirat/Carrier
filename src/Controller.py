@@ -1,4 +1,4 @@
-from crm.CrmService import CrmService
+from src.crm.CrmService import CrmService
 
 
 class Controller:

@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ReplyKeyboardMarkup
 from aiogram.filters.callback_data import CallbackData
-from loger import loger
+from src.loger import logger
 
 
 class OrderIdCallback(CallbackData, prefix="order_"):
@@ -14,7 +14,7 @@ def get_main_ikb() -> ReplyKeyboardMarkup:
 
 
 def get_order_ikb(order: dict) -> InlineKeyboardMarkup:
-    loger.debug(f'{order.get("id") = }')
+    logger.debug(f'{order.get("id") = }')
     ikb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='Выполнен',
                               callback_data=OrderIdCallback(pk=str(order.get("id"))).pack()), ],

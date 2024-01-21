@@ -1,32 +1,31 @@
-from crm.handlers.OrderResponseHandler import OrderResponseHandler
+from src.crm.handlers.OrderResponseHandler import OrderResponseHandler
 from retailcrm import v5 as retailcrm
 from pprint import pprint
 
-from settings import STATUS_ORDER_COMPLETE, STATUS_DELIVERY_KAZAN
+from src.settings import STATUS_ORDER_COMPLETE, STATUS_DELIVERY_KAZAN, CRM_URL, CRM_TOKEN
 
-from settings import CRM_URL, CRM_TOKEN
-
-from loger import loger
+from src.loger import logger
 
 
 class CrmService:
-    def __init__(self, client: retailcrm):
+    def __init__(self, client: retailcrm, order_handler=OrderResponseHandler()):
         self.client = client
+        self.order_handler = order_handler
 
     def orders(self, delivery_date):
         filters = {'extendedStatus': STATUS_DELIVERY_KAZAN}
         if delivery_date:
             filters.update({'deliveryDateFrom': delivery_date, 'deliveryDateTo': delivery_date})
-        loger.debug(f"Отправляем запрос: client.orders({filters=})")
+        logger.debug(f"Отправляем запрос: client.orders({filters=})")
         response = self.client.orders(filters=filters).get_response()
-        loger.debug(f'Получили ответ {response = }')
+        logger.debug(f'Получили ответ {response = }')
 
         orders = response.get('orders')
         list_orders = list()
         for item in orders:
-            order = OrderResponseHandler(item)
-            list_orders.append(order.dump())
-        loger.debug(f'Список заказов готов: {list_orders = }')
+            self.order_handler.upload(item)
+            list_orders.append(self.order_handler.dump())
+        logger.debug(f'Список заказов готов: {list_orders = }')
         return list_orders
 
     def order_completed(self, pk: str) -> bool:
