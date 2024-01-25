@@ -1,5 +1,4 @@
 import pytest
-from unittest.mock import Mock
 from src.crm.handlers.OrderResponseHandler import OrderResponseHandler
 
 
